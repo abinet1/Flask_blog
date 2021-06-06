@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up Form</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='fontawesome/css/all.min.css') }}">  
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/magnific-popup.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='slick/slick.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='slick/slick-theme.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/templatemo-upright.css') }}">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">
+    <link href='https://fonts.googleapis.com/css?family=Nunito:400,300' rel='stylesheet' type='text/css'>
+    <link href="{{url_for('static',filename='css/style.css') }}" rel='stylesheet'>
+</head>
+<body>
+  <form action="" method="POST">
+    {{ form.hidden_tag() }}
+    <h1>Sign Up</h1>
+    <fieldset>
+      <div class="form-group">
+        {{ form.full_name.label(class="form-control-label") }}
+
+        {% if form.full_name.errors %}
+          {{ form.full_name(class="form-control form-control-lg is-invalid") }}
+          <div class="invalid-feedback">
+            {% for error in form.full_name.errors %}
+              <span>{{ error }}</span>
+            {% endfor %}
+          </div>
+        {% else %}
+          {{ form.full_name(class="form-control form-control-lg") }}
+        {% endif %}
+      </div>
+      <div class="form-group">
+        {{ form.user_name.label(class="form-control-label") }}
+
+        {% if form.user_name.errors %}
+          {{ form.user_name(class="form-control form-control-lg is-invalid") }}
+          <div class="invalid-feedback">
+            {% for error in form.user_name.errors %}
+              <span>{{ error }}</span>
+            {% endfor %}
+          </div>
+        {% else %}
+          {{ form.user_name(class="form-control form-control-lg") }}
+        {% endif %}
+      </div>
+
+      <div class="form-group">
+        {{ form.email.label(class="form-control-label")}}
+        {% if form.email.errors %}
+          {{ form.email(class="form-control form-control-lg is-invalid") }}
+          <div class="invalid-feedback">
+            {% for error in form.email.errors %}
+              <span>{{ error }}</span>
+            {% endfor %}
+          </div>
+        {% else %}
+          {{ form.email(class="form-control form-control-lg ") }}
+        {% endif %}
+      </div>
+      
+      <div class="form-group">
+        {{ form.password.label(class="form-control-label", type="password")}}
+        {% if form.password.errors %}
+          {{ form.password(class="form-control form-control-lg is-invalid", type="password") }}
+          <div class="invalid-feedback">
+            {% for error in form.password.errors %}
+              <span>{{ error }}</span>
+            {% endfor %}
+          </div>
+        {% else %}
+          {{ form.password(class="form-control form-control-lg", type="password") }}
+        {% endif %}
+      </div>
+      <div class="form-group">
+        {{ form.confirm_password.label(class="form-control-label", type="password")}}
+        {% if form.confirm_password.errors %}
+          {{ form.confirm_password(class="form-control form-control-lg is-invalid", type="password") }}
+          <div class="invalid-feedback">
+            {% for error in form.confirm_password.errors %}
+              <span>{{ error }}</span>
+            {% endfor %}
+          </div>
+        {% else %}
+          {{ form.confirm_password(class="form-control form-control-lg", type="password") }}
+        {% endif %}
+      </div>
+    </fieldset>
+    {{ form.submit(class="btn")}}
+  </form>
+  
+</body>
+</html>

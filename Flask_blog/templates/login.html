@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Form</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='fontawesome/css/all.min.css') }}">  
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/magnific-popup.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='slick/slick.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='slick/slick-theme.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/templatemo-upright.css') }}">
+    <link href='https://fonts.googleapis.com/css?family=Nunito:400,300' rel='stylesheet' type='text/css'>
+    <link href="{{url_for('static',filename='css/style.css') }}" rel='stylesheet'>
+</head>
+<body>
+  <form action="" method="POST">
+    {{ form.hidden_tag() }}
+    {% if error %}
+      <div class="alert alert-danger">
+        Login Unsuccessful. please check email and password
+      </div>
+    {% endif %}
+    <h1>Login</h1>
+    <fieldset>
+      <label for="mail">Email:</label>
+      {{ form.email(type="email") }}
+      
+      
+      <label for="password">Password:</label>
+      {{ form.password(type='password') }}
+      
+
+      <div class="form-check" style="display: inline-block;">
+        {{ form.remember_me(style="display: inline-block;") }}
+        {{ form.remember_me.label(class="form-check-label", style="display: inline-block;") }}
+      </div>
+    </fieldset>
+    {{ form.submit(class="btn") }}
+    </form>
+  
+</body>
+</html>
