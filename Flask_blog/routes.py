@@ -3,7 +3,7 @@ import secrets
 from Flask_blog import app, bcrypt, db
 from Flask_blog.form import LoginForm, RegistrationForm, PostForm,ProfileForm
 from Flask_blog.models import User, Blog
-from flask import flash,render_template, redirect, url_for, request
+from flask import flash,render_template, redirect, url_for, request, abort
 from flask_login import login_user, current_user, logout_user, login_required
 from datetime import datetime 
 
@@ -58,16 +58,31 @@ def editProfile():
 	if form.validate_on_submit():
 		current_user.user_name = form.user_name.data
 		current_user.full_name = form.full_name.data
-		current_user.password = form.password.data
+		hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
+		current_user.password = hashed_password
 		db.session.commit()
 		return redirect(url_for('index'))
 
 	return render_template('editProfile.html', form = form)
 
-@app.route('/editpost',methods=['POST','GET'])
+@app.route('/editpost/<int:post_id>',methods=['POST','GET'])
 @login_required
-def editPost():
-	return "Blog editing post is complited"
+def editPost(post_id):
+	post = Blog.query.get_or_404(post_id)
+	if post.author != current_user.id:
+		abort(403)
+	
+	form = PostForm()
+	if form.validate_on_submit():
+		post.title = form.title.data
+		post.context = form.context.data
+		db.session.commit()
+		return redirect(url_for('index'))
+	elif request.method=='Get':
+		form.title.data = post.title
+		form.context.data = post.context
+	return render_template('editPost.html', form=form)
+
 
 
 @app.route('/addblog',methods=['POST','GET'])
@@ -81,4 +96,21 @@ def addPost():
 		db.session.commit()
 		return redirect(url_for('index'))
 	return render_template('addPost.html', form=form)
+
+
+
+
+@app.route('/blog/<int:post_id>/delete', methods=['POST','GET'])
+@login_required
+def deletePost(post_id):
+	post = Blog.query.get_or_404(post_id)
+	if post.author != current_user.id:
+		abort(403)
+	else:
+		db.session.delete(post)
+		db.session.commit()
+
+	return redirect(url_for('index'))
+
+
 

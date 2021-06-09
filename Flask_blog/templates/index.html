@@ -117,26 +117,20 @@ https://templatemo.com/tm-555-upright
                                             {% if current_user == post.writer%}
                                                 <ul id="tm-main-nav">
                                                     <li class="nav-item"  style="display: inline-block;">
-                                                        <a href="#profile" class="sm-2 md-1 lg-1 nav-link">
+                                                        <a href="{{ url_for('editProfile', post_id=post.id) }}" class="sm-2 md-1 lg-1 nav-link">
                                                             <i class="far fa-edit"></i>
                                                         </a>
                                                     </li>
                                                     <li class="nav-item"  style="display: inline-block;">
-                                                        <a href="#logout" class="sm-2 nav-link" >
+                                                        <a href="{{ url_for('deletePost', post_id=post.id) }}" class="sm-2 nav-link">
                                                             <i class="far fa-trash-alt"></i>
                                                         </a>
-                                                        <!-- <a href="#logout" class="sm-2 nav-link" style="display: inline-block;">
-                                                            <i class="fas fa-sign-in-alt nav-icon"></i>
-                                                        </a> -->
                                                     </li>
                                                 </ul>
-
                                             {% endif %}
                                         </div>                          
                                     </div>
                                 {% endfor %}
-
-
                             </div>
                         </div>
                     </section>

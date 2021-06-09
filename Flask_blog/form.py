@@ -33,7 +33,7 @@ class LoginForm(FlaskForm):
 
 class PostForm(FlaskForm):
 	title = StringField('Title', validators=[DataRequired(), Length(min=2, max=250)])
-	context = TextField("article", validators=[DataRequired()])
+	context = TextField("Article", validators=[DataRequired()])
 	submit=SubmitField('Add Article')
 
 class ProfileForm(FlaskForm):
@@ -47,7 +47,6 @@ class ProfileForm(FlaskForm):
 			user = User.query.filter_by(user_name=user_name.data).first()
 			if user:
 				raise ValidationError('That username is taken. Please choose a different one.')
-
 
 
 	
