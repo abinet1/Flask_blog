@@ -20,11 +20,11 @@ class User(db.Model, UserMixin):
 
 class Blog(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
-	title = db.Column(db.String(30), nullable=False)
+	title = db.Column(db.String(250), nullable=False)
 	date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
 	recently_update = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
 	context = db.Column(db.Text, nullable=False)
 	author = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
 	def __repr__(self):
-		return f"Blog('{self.id}','{self.title}','{self.date}','{self.author}')"
+		return f"Blog('{self.id}','{self.title}','{self.context}','{self.author}')"

@@ -54,38 +54,44 @@ https://templatemo.com/tm-555-upright
                                     About
                                 </a>
                             </li>
-                            <li class="nav-item">
-                                <a href="#contact" class="nav-link">
-                                    <i class="fas fa-envelope nav-icon"></i>
-                                    Contact
-                                </a>
-                            </li>
-                            <li class="nav-item"  style="display: inline-block;">
-                                <a href="#profile" class="sm-2 md-1 lg-1 nav-link">
-                                    <i class="far fa-id-badge nav-icon"></i>
-                                </a>
-                            </li>
-                            <li class="nav-item"  style="display: inline-block;">
-                                <a href="#logout" class="sm-2 nav-link" >
-                                    <i class="fas fa-sign-out-alt nav-icon"></i>
-                                </a>
-                                <!-- <a href="#logout" class="sm-2 nav-link" style="display: inline-block;">
-                                    <i class="fas fa-sign-in-alt nav-icon"></i>
-                                </a> -->
-                            </li>
+                            
+                            {% if current_user.is_authenticated %}
+                                <li class="nav-item"  style="display: inline-block;">
+                                    <a href="#profile" class="sm-2 md-1 lg-1 nav-link">
+                                        <i class="far fa-id-badge nav-icon"></i>
+                                    </a>
+                                </li>
+                                <li class="nav-item"  style="display: inline-block;">
+                                    <a href="{{ url_for('log_out') }}" class="sm-2 nav-link" >
+                                        <i class="fas fa-sign-out-alt nav-icon"></i>
+                                    </a>
+                                </li>
+                            {% else %}
+                                <li class="nav-item"  style="display: inline-block;">
+                                    <a href="{{ url_for('signup') }}" class="sm-2 md-1 lg-1 nav-link">
+                                        <i class="fas fa-user-plus nav-icon"></i>
+                                    </a>
+                                </li>
+                                <li class="nav-item"  style="display: inline-block;">
+                                    <a href="{{ url_for('login') }}" class="sm-2 nav-link" >
+                                        <i class="fas fa-sign-in-alt nav-icon"></i>
+                                    </a>
+                                </li>
+                            {% endif %}
                         </ul>
                     </div>
                 </nav>
             </div>
-            <ul id="tm-main-nav">
-                <li class="nav-item">
-
-                    <a href="#add_post" class=" btn nav-item" style="background-color: white; padding: 10px 10px; border-radius: 5px; margin: 10px; position: fixed; top: 110px;right: 30px;z-index: 1;">
-                        <i class="fas fa-plus-circle nav-link" style="color: #666666;">Add Post</i>
-                        
-                    </a>
-                </li>
-            </ul>
+            {% if current_user.is_authenticated %}
+                <ul id="tm-main-nav">
+                    <li class="nav-item">
+                        <a href="{{ url_for('addPost') }}" class=" btn nav-item" style="background-color: white; padding: 10px 10px; border-radius: 5px; margin: 10px; position: fixed; top: 110px;right: 30px;z-index: 1;">
+                            <i class="fas fa-plus-circle nav-link" style="color: #666666;">Add Post</i>
+                            
+                        </a>
+                    </li>
+                </ul>
+            {% endif%}
             <div class="tm-main">
                 <!-- Home section -->
                 <div class="tm-section-wrap">
@@ -124,10 +130,10 @@ https://templatemo.com/tm-555-upright
                                                         </a> -->
                                                     </li>
                                                 </ul>
+
                                             {% endif %}
                                         </div>                          
                                     </div>
-                                    
                                 {% endfor %}
 
 
@@ -171,6 +177,7 @@ https://templatemo.com/tm-555-upright
                                                     <li><a href="https://twitter.com" class="tm-social-link"><i class="fab fa-twitter"></i></a></li>
                                                     <li><a href="https://instagram.com" class="tm-social-link"><i class="fab fa-instagram"></i></a></li>
                                                     <li><a href="https://youtube.com" class="tm-social-link"><i class="fab fa-youtube"></i></a></li>
+                                                    <li><a href="{{url_for('editProfile') }}" class="tm-social-link" style="margin-left: 500%;"><i class="fas fa-user-edit"></i><small>edit</small></a> </li>
                                                 </ul>
                                             </div>
                                         </div>
@@ -220,80 +227,7 @@ https://templatemo.com/tm-555-upright
                 </div>
 
 
-                <!-- Contact section -->
-                <div class="tm-section-wrap">
-                    <div id="contact" class="tm-section">
-                        <h2 class="tm-text-primary">Contact Upright</h2>
-                        <hr class="mb-5">
-                        <div class="row">
-                            <div class="col-xl-6 tm-contact-col-l mb-4">
-                                <form id="contact-form" action="" method="POST" class="tm-contact-form">
-                                    <div class="form-group">
-                                        <input type="text" name="name" class="form-control rounded-0" placeholder="Name" required />
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="email" name="email" class="form-control rounded-0" placeholder="Email" required />
-                                    </div>
-                                    <div class="form-group">
-                                        <select class="form-control" id="contact-select" name="inquiry">
-                                            <option value="-">Subject</option>
-                                            <option value="sales">Sales &amp; Marketing</option>
-                                            <option value="creative">Creative Design</option>
-                                            <option value="uiux">UI / UX</option>
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <textarea rows="8" name="message" class="form-control rounded-0" placeholder="Message" required=></textarea>
-                                    </div>
-            
-                                    <div class="form-group tm-text-right">
-                                        <button type="submit" class="btn btn-primary">Send</button>
-                                    </div>
-                                </form>
-                            </div>
-                            <div class="col-xl-6 tm-contact-col-r">
-                                <!-- Map -->
-                                <div class="mapouter mb-4">
-                                    <div class="gmap_canvas">
-                                        <iframe width="100%" height="520" id="gmap_canvas"
-                                            src="https://maps.google.com/maps?q=Av.+L%C3%BAcio+Costa,+Rio+de+Janeiro+-+RJ,+Brazil&t=&z=13&ie=UTF8&iwloc=&output=embed"
-                                            frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>
-                                    </div>
-                                </div>
-            
-                                <!-- Address -->
-                                <address class="mb-4">
-                                    120-240 eget purus luctus sodales. Sed<br>
-                                    auctor odio quis ligula dignissim efficitur<br>
-                                    vitae vitae quam 16502
-                                </address>
-            
-                                <!-- Links -->
-                                <ul class="tm-contact-links mb-4">
-                                    <li class="mb-2">
-                                        <a href="tel:0100200340">
-                                            <i class="fas fa-phone mr-2 tm-contact-link-icon"></i>
-                                            Tel: 010-020-0340
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="mailto:info@company.com">
-                                            <i class="fas fa-at mr-2 tm-contact-link-icon"></i>
-                                            Email: info@company.com
-                                        </a>
-                                    </li>
-                                </ul>
-                                <ul class="tm-contact-social">
-                                    <li><a href="https://fb.com/templatemo" class="tm-social-link"><i class="fab fa-facebook"></i></a></li>
-                                    <li><a href="https://twitter.com" class="tm-social-link"><i class="fab fa-twitter"></i></a></li>
-                                    <li><a href="https://instagram.com" class="tm-social-link"><i class="fab fa-instagram"></i></a></li>
-                                    <li><a href="https://youtube.com" class="tm-social-link"><i class="fab fa-youtube"></i></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
+                
 
 
                 <!-- Copyright -->                
