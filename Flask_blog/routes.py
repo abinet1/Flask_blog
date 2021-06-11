@@ -85,7 +85,7 @@ def editPost(post_id):
 
 
 
-@app.route('/addblog',methods=['POST','GET'])
+@app.route('/addpost',methods=['POST','GET'])
 @login_required
 def addPost():
 	form = PostForm()
@@ -100,7 +100,7 @@ def addPost():
 
 
 
-@app.route('/blog/<int:post_id>/delete', methods=['POST','GET'])
+@app.route('/post/<int:post_id>/delete', methods=['POST','GET'])
 @login_required
 def deletePost(post_id):
 	post = Blog.query.get_or_404(post_id)
@@ -114,3 +114,7 @@ def deletePost(post_id):
 
 
 
+@app.route('/post/<int:post_id>/view', methods=['POST','GET'])
+def viewPost(post_id):
+	post = Blog.query.get_or_404(post_id)
+	return render_template('viewPost.html', post=post)
